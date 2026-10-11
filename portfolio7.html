@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рябов Артём — верстаю сайты</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0d0d;
+    --ink-soft:#1a1a1a;
+    --paper:#f5f3ee;
+    --yellow:#f5c518;
+    --yellow-dim:#d9ad0f;
+    --line:#d8d4c8;
+    --line-dark:#2a2a2a;
+    --muted:#6b6659;
+    --muted-light:#a8a396;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    overflow-x:hidden;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+    line-height:1.1;
+    text-transform:uppercase;
+  }
+  .container{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:var(--ink);
+    border-bottom:2px solid var(--yellow);
+  }
+  nav .container{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:16px;padding-bottom:16px;
+  }
+  nav .logo{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;font-size:1.05rem;
+    color:#fff;text-decoration:none;
+    letter-spacing:0.06em;text-transform:uppercase;
+  }
+  nav .logo em{
+    font-style:normal;color:var(--yellow);
+  }
+  nav ul{list-style:none;display:flex;gap:28px;}
+  nav ul a{
+    color:#e8e5db;text-decoration:none;
+    font-size:0.85rem;font-weight:500;
+    letter-spacing:0.08em;text-transform:uppercase;
+    padding:6px 0;
+    border-bottom:2px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  nav ul a:hover{color:var(--yellow);border-bottom-color:var(--yellow);}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:140px 0 90px;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .hero .container{
+    display:grid;grid-template-columns:1.15fr 0.85fr;
+    gap:64px;align-items:center;
+  }
+  .hero-text .kicker{
+    display:inline-block;
+    background:var(--ink);color:var(--yellow);
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:600;
+    letter-spacing:0.15em;text-transform:uppercase;
+    padding:6px 12px;margin-bottom:24px;
+  }
+  .hero-text h1{
+    font-size:clamp(2.4rem, 5.5vw, 4rem);
+    font-weight:700;
+    margin-bottom:22px;
+    letter-spacing:-0.005em;
+  }
+  .hero-text h1 mark{
+    background:var(--yellow);
+    color:var(--ink);
+    padding:0 8px;
+  }
+  .hero-text p{
+    font-size:1.05rem;color:var(--muted);
+    margin-bottom:34px;max-width:540px;
+    line-height:1.7;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 26px;
+    font-family:'Oswald',sans-serif;
+    font-size:0.88rem;font-weight:600;
+    letter-spacing:0.08em;text-transform:uppercase;
+    text-decoration:none;cursor:pointer;border:none;
+    transition:transform .15s, background .2s, color .2s, border-color .2s;
+  }
+  .btn-primary{
+    background:var(--yellow);color:var(--ink);
+    border:2px solid var(--yellow);
+  }
+  .btn-primary:hover{
+    background:var(--ink);color:var(--yellow);
+    border-color:var(--ink);
+  }
+  .btn-outline{
+    background:transparent;color:var(--ink);
+    border:2px solid var(--ink);
+  }
+  .btn-outline:hover{
+    background:var(--ink);color:var(--yellow);
+  }
+
+  .hero-visual{
+    position:relative;
+    background:var(--ink);
+    padding:32px;
+    border:2px solid var(--ink);
+    box-shadow:12px 12px 0 var(--yellow);
+  }
+  .hero-visual pre{
+    font-family:'SF Mono',Consolas,monospace;
+    font-size:0.82rem;line-height:1.9;
+    color:#e8e5db;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .hero-visual pre .tag{color:var(--yellow);}
+  .hero-visual pre .attr{color:#9fbf7f;}
+  .hero-visual pre .str{color:#e8a86b;}
+
+  .hero-note{
+    position:absolute;
+    bottom:-18px;left:-18px;
+    background:var(--paper);
+    border:2px solid var(--ink);
+    padding:10px 14px;
+    font-size:0.78rem;
+    font-weight:500;
+    color:var(--ink);
+    transform:rotate(-2deg);
+  }
+
+  /* ===== SECTIONS ===== */
+  section{padding:96px 0;}
+  .section-head{max-width:600px;margin-bottom:52px;}
+  .section-head .kicker{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--ink);
+    background:var(--yellow);
+    padding:4px 10px;
+    margin-bottom:16px;
+  }
+  .section-head h2{
+    font-size:clamp(1.8rem, 3.5vw, 2.6rem);
+    margin-bottom:14px;
+  }
+  .section-head p{color:var(--muted);font-size:1rem;}
+
+  /* ===== DARK — подход ===== */
+  .dark{
+    background:var(--ink);color:#e8e5db;
+    padding:110px 0;
+    border-top:2px solid var(--yellow);
+    border-bottom:2px solid var(--yellow);
+  }
+  .dark-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:72px;align-items:center;
+  }
+  .dark .kicker{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--ink);background:var(--yellow);
+    padding:4px 10px;margin-bottom:16px;
+  }
+  .dark h2{
+    font-size:clamp(1.8rem, 3.5vw, 2.6rem);
+    color:#fff;margin-bottom:22px;
+  }
+  .dark p{color:var(--muted-light);margin-bottom:18px;}
+  .dark ul{list-style:none;counter-reset:item;}
+  .dark ul li{
+    padding:14px 0;
+    border-bottom:1px solid var(--line-dark);
+    color:#e8e5db;
+    font-size:0.95rem;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .dark ul li:last-child{border-bottom:none;}
+  .dark ul li::before{
+    content:counter(item);
+    counter-increment:item;
+    flex-shrink:0;
+    width:22px;height:22px;
+    background:var(--yellow);color:var(--ink);
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    margin-top:2px;
+  }
+  .dark-quote{
+    background:#000;
+    border-left:4px solid var(--yellow);
+    padding:36px 32px;
+  }
+  .dark-quote p{
+    font-family:'Oswald',sans-serif;
+    font-size:1.35rem;
+    font-weight:500;
+    line-height:1.35;
+    text-transform:uppercase;
+    color:#fff;
+    letter-spacing:0.01em;
+  }
+  .dark-quote p em{
+    font-style:normal;
+    color:var(--yellow);
+  }
+
+  /* ===== WHY ===== */
+  .why-grid{
+    display:grid;grid-template-columns:0.85fr 1.15fr;
+    gap:64px;align-items:start;
+  }
+  .why-num{
+    font-family:'Oswald',sans-serif;
+    font-size:9rem;font-weight:700;
+    color:var(--yellow);
+    line-height:0.85;
+    letter-spacing:-0.03em;
+    border-top:3px solid var(--ink);
+    padding-top:16px;
+    margin-bottom:8px;
+  }
+  .why-num-label{
+    font-family:'Oswald',sans-serif;
+    font-size:0.8rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .why-list{list-style:none;counter-reset:item;}
+  .why-list li{
+    padding:26px 0 26px 0;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .why-list li:first-child{padding-top:0;}
+  .why-list li:last-child{border-bottom:none;}
+  .why-list li h4{
+    font-size:1.1rem;font-weight:600;
+    margin-bottom:6px;
+    text-transform:none;
+    font-family:'Inter',sans-serif;
+    letter-spacing:-0.005em;
+  }
+  .why-list li p{
+    color:var(--muted);font-size:0.94rem;
+    line-height:1.65;
+  }
+  .why-list li h4::before{
+    content:counter(item) '.';
+    counter-increment:item;
+    color:var(--yellow-dim);
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    margin-right:10px;
+  }
+
+  /* ===== PROJECTS ===== */
+  .projects-section{
+    background:var(--ink);
+    color:#e8e5db;
+    padding:100px 0;
+  }
+  .projects-section .section-head .kicker{
+    background:var(--yellow);color:var(--ink);
+  }
+  .projects-section .section-head h2{color:#fff;}
+  .projects-section .section-head p{color:var(--muted-light);}
+
+  .projects-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:16px;
+  }
+  .proj-card{
+    grid-column:span 2;
+    background:#000;
+    border:1px solid var(--line-dark);
+    padding:0;
+    cursor:pointer;
+    text-align:left;
+    color:#e8e5db;
+    font-family:inherit;
+    transition:border-color .2s, transform .2s;
+    display:flex;flex-direction:column;
+  }
+  .proj-card:hover{border-color:var(--yellow);}
+  .proj-card:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;}
+  .proj-card.big{grid-column:span 3;}
+
+  .proj-thumb{
+    background:var(--yellow);
+    color:var(--ink);
+    padding:24px;
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .proj-thumb .num{
+    font-family:'Oswald',sans-serif;
+    font-size:2.6rem;font-weight:700;
+    line-height:1;
+    letter-spacing:-0.02em;
+  }
+  .proj-thumb .kind{
+    font-family:'Oswald',sans-serif;
+    font-size:0.7rem;font-weight:600;
+    letter-spacing:0.16em;text-transform:uppercase;
+    text-align:right;
+    line-height:1.3;
+  }
+  .proj-body{padding:22px;}
+  .proj-body h3{
+    font-size:1.1rem;
+    color:#fff;
+    margin-bottom:10px;
+    text-transform:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.005em;
+    line-height:1.35;
+  }
+  .proj-body p{
+    color:var(--muted-light);
+    font-size:0.9rem;
+    margin-bottom:16px;
+  }
+  .proj-body .stack{
+    font-family:'Oswald',sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--yellow);
+    border-top:1px solid var(--line-dark);
+    padding-top:14px;
+  }
+
+  /* ===== SERVICES ===== */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap:0;
+    border:2px solid var(--ink);
+  }
+  .service-card{
+    padding:32px 26px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+    transition:background .2s;
+    position:relative;
+  }
+  .service-card:hover{background:#fff;}
+  .service-card::after{
+    content:'';
+    position:absolute;left:0;bottom:-1px;
+    width:0;height:3px;background:var(--yellow);
+    transition:width .3s;
+  }
+  .service-card:hover::after{width:100%;}
+  .service-card .s-num{
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:600;
+    letter-spacing:0.16em;
+    color:var(--muted);
+    display:block;margin-bottom:20px;
+  }
+  .service-card h3{
+    font-size:1.15rem;
+    margin-bottom:10px;
+    text-transform:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.005em;
+  }
+  .service-card p{
+    color:var(--muted);
+    font-size:0.92rem;
+    line-height:1.65;
+  }
+
+  /* ===== ABOUT ===== */
+  .about-section{background:var(--paper);}
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1.3fr;
+    gap:64px;align-items:start;
+  }
+  .about-photo{
+    background:var(--ink);
+    border:2px solid var(--ink);
+    box-shadow:12px 12px 0 var(--yellow);
+    aspect-ratio:4/5;
+    display:flex;align-items:flex-end;
+    padding:32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .about-photo::before{
+    content:'';
+    position:absolute;inset:0;
+    background:repeating-linear-gradient(
+      -45deg,
+      transparent 0 22px,
+      rgba(245,197,24,0.06) 22px 23px
+    );
+  }
+  .about-photo .initials{
+    font-family:'Oswald',sans-serif;
+    font-size:5rem;font-weight:700;
+    color:var(--yellow);
+    line-height:0.9;
+    position:relative;z-index:1;
+    letter-spacing:-0.02em;
+  }
+  .about-text .kicker{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--ink);background:var(--yellow);
+    padding:4px 10px;margin-bottom:16px;
+  }
+  .about-text h2{
+    font-size:clamp(1.8rem, 3.5vw, 2.4rem);
+    margin-bottom:20px;
+  }
+  .about-text p{
+    color:#3a3a3a;
+    margin-bottom:16px;
+    font-size:1rem;
+  }
+  .about-text p strong{
+    background:var(--yellow);
+    padding:0 4px;
+    font-weight:600;
+  }
+  .facts{
+    margin-top:32px;
+    border-top:2px solid var(--ink);
+  }
+  .fact{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:20px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .fact dt{
+    font-family:'Oswald',sans-serif;
+    font-size:0.78rem;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .fact dd{font-size:0.96rem;color:var(--ink);}
+
+  /* ===== CONTACT ===== */
+  .contact-section{background:#fff;border-top:2px solid var(--ink);}
+  .contact-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:56px;align-items:start;
+  }
+  .contact-info .kicker{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;font-weight:600;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--ink);background:var(--yellow);
+    padding:4px 10px;margin-bottom:16px;
+  }
+  .contact-info h2{
+    font-size:clamp(1.8rem, 3.5vw, 2.4rem);
+    margin-bottom:18px;
+  }
+  .contact-info > p{color:var(--muted);margin-bottom:32px;}
+  .channels{display:flex;flex-direction:column;gap:0;border-top:2px solid var(--ink);}
+  .channel{
+    display:flex;align-items:center;gap:18px;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+    text-decoration:none;color:var(--ink);
+    transition:padding-left .2s;
+  }
+  .channel:hover{padding-left:8px;}
+  .channel .label{
+    font-family:'Oswald',sans-serif;
+    font-size:0.72rem;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--muted);
+    min-width:80px;
+  }
+  .channel .value{
+    font-family:'Oswald',sans-serif;
+    font-size:1.1rem;font-weight:500;
+    letter-spacing:0.01em;
+  }
+  .channel:hover .value{color:var(--yellow-dim);}
+
+  .contact-form{
+    background:var(--ink);
+    border:2px solid var(--ink);
+    padding:36px;
+    color:#e8e5db;
+    position:relative;
+  }
+  .contact-form h3{
+    color:#fff;font-size:1.3rem;
+    margin-bottom:6px;
+  }
+  .contact-form .hint{
+    color:var(--muted-light);
+    font-size:0.88rem;
+    margin-bottom:26px;
+  }
+  .contact-form .field{margin-bottom:16px;}
+  .contact-form label{
+    display:block;
+    font-family:'Oswald',sans-serif;
+    font-size:0.72rem;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--yellow);
+    margin-bottom:8px;
+  }
+  .contact-form input,
+  .contact-form textarea{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--line-dark);
+    background:#000;
+    color:#fff;
+    font-family:inherit;
+    font-size:0.95rem;
+    border-radius:2px;
+    transition:border-color .2s;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus{
+    outline:none;
+    border-color:var(--yellow);
+  }
+  .contact-form textarea{resize:vertical;min-height:100px;}
+  .contact-form .submit{
+    width:100%;
+    padding:15px;
+    background:var(--yellow);
+    color:var(--ink);
+    border:2px solid var(--yellow);
+    font-family:'Oswald',sans-serif;
+    font-size:0.9rem;font-weight:600;
+    letter-spacing:0.1em;text-transform:uppercase;
+    cursor:pointer;
+    transition:background .2s, color .2s, opacity .2s;
+    margin-top:6px;
+  }
+  .contact-form .submit:hover:not(:disabled){
+    background:#000;color:var(--yellow);
+  }
+  .contact-form .submit:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+  }
+  .contact-form .note{
+    font-size:0.78rem;
+    color:var(--muted-light);
+    margin-top:14px;
+    line-height:1.5;
+    transition:color .2s;
+  }
+  .contact-form .note.is-success{color:#7fbf5f;}
+  .contact-form .note.is-error{color:#e86b6b;}
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:#000;
+    color:var(--muted-light);
+    padding:56px 0 24px;
+    border-top:2px solid var(--yellow);
+  }
+  .footer-top{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:36px;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .footer-top h4{
+    color:#fff;font-size:0.85rem;
+    letter-spacing:0.14em;
+    margin-bottom:16px;
+  }
+  .footer-top p{font-size:0.9rem;line-height:1.7;}
+  .footer-top ul{list-style:none;}
+  .footer-top ul li{margin-bottom:10px;}
+  .footer-top ul a{
+    color:var(--muted-light);
+    text-decoration:none;
+    font-size:0.9rem;
+    transition:color .2s;
+  }
+  .footer-top ul a:hover{color:var(--yellow);}
+  .footer-bottom{
+    display:flex;justify-content:space-between;
+    align-items:center;
+    padding-top:22px;
+    font-size:0.82rem;
+    flex-wrap:wrap;gap:12px;
+  }
+  .footer-bottom .socials{display:flex;gap:0;}
+  .footer-bottom .socials a{
+    padding:8px 14px;
+    color:var(--muted-light);
+    text-decoration:none;
+    font-family:'Oswald',sans-serif;
+    font-size:0.75rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    border-left:1px solid var(--line-dark);
+    transition:color .2s, background .2s;
+  }
+  .footer-bottom .socials a:last-child{border-right:1px solid var(--line-dark);}
+  .footer-bottom .socials a:hover{
+    color:var(--ink);background:var(--yellow);
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.88);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;z-index:1000;
+    opacity:0;visibility:hidden;
+    transition:opacity .25s, visibility .25s;
+  }
+  .modal-overlay.active{opacity:1;visibility:visible;}
+  .modal{
+    background:var(--paper);
+    max-width:640px;width:100%;
+    max-height:88vh;overflow-y:auto;
+    padding:40px;
+    border:2px solid var(--ink);
+    box-shadow:14px 14px 0 var(--yellow);
+    position:relative;
+    transform:translateY(12px);
+    transition:transform .25s;
+  }
+  .modal-overlay.active .modal{transform:translateY(0);}
+  .modal-close{
+    position:absolute;top:14px;right:14px;
+    width:36px;height:36px;
+    background:var(--ink);color:var(--yellow);
+    border:none;cursor:pointer;
+    font-size:1rem;
+    transition:background .2s, color .2s;
+  }
+  .modal-close:hover{background:var(--yellow);color:var(--ink);}
+  .modal-thumb{
+    background:var(--ink);
+    color:var(--yellow);
+    padding:20px 22px;
+    margin-bottom:22px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .modal-thumb .num{
+    font-family:'Oswald',sans-serif;
+    font-size:2.4rem;font-weight:700;
+    line-height:1;letter-spacing:-0.02em;
+  }
+  .modal-thumb .kind{
+    font-family:'Oswald',sans-serif;
+    font-size:0.72rem;font-weight:600;
+    letter-spacing:0.16em;text-transform:uppercase;
+    text-align:right;line-height:1.3;
+  }
+  .modal h3{
+    font-size:1.5rem;
+    margin-bottom:12px;
+    text-transform:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.005em;
+    line-height:1.3;
+  }
+  .modal > p{color:#3a3a3a;margin-bottom:20px;font-size:0.96rem;}
+  .modal-note{
+    background:var(--yellow);
+    color:var(--ink);
+    padding:12px 16px;
+    font-size:0.86rem;
+    font-weight:500;
+    margin-bottom:24px;
+  }
+  .modal-section{margin-bottom:20px;}
+  .modal-section h4{
+    font-size:0.75rem;
+    letter-spacing:0.16em;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+  .modal-section ul{list-style:none;}
+  .modal-section ul li{
+    padding:8px 0 8px 20px;
+    position:relative;
+    color:#2a2a2a;
+    font-size:0.94rem;
+    border-bottom:1px solid var(--line);
+  }
+  .modal-section ul li:last-child{border-bottom:none;}
+  .modal-section ul li::before{
+    content:'—';
+    position:absolute;left:0;
+    color:var(--yellow-dim);
+    font-weight:700;
+  }
+  .modal-section p{color:#2a2a2a;font-size:0.94rem;}
+  .modal-actions{
+    display:flex;flex-wrap:wrap;gap:10px;
+    margin-top:24px;padding-top:22px;
+    border-top:2px solid var(--ink);
+  }
+  .modal-actions .btn-primary,
+  .modal-actions .btn-ghost{
+    padding:12px 22px;
+    font-family:'Oswald',sans-serif;
+    font-size:0.82rem;font-weight:600;
+    letter-spacing:0.1em;text-transform:uppercase;
+    border:2px solid var(--ink);
+    cursor:pointer;text-decoration:none;
+    transition:background .2s, color .2s;
+  }
+  .modal-actions .btn-primary{
+    background:var(--yellow);color:var(--ink);
+  }
+  .modal-actions .btn-primary:hover{
+    background:var(--ink);color:var(--yellow);
+  }
+  .modal-actions .btn-ghost{
+    background:transparent;color:var(--ink);
+  }
+  .modal-actions .btn-ghost:hover{
+    background:var(--ink);color:var(--yellow);
+  }
+
+  /* ===== REVEAL ===== */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* ===== MOBILE ===== */
+  @media (max-width:960px){
+    .hero .container,
+    .dark-grid,
+    .why-grid,
+    .about-grid,
+    .contact-grid{grid-template-columns:1fr;gap:44px;}
+    .hero-visual{max-width:480px;}
+    .why-num{font-size:6rem;}
+    .projects-grid{grid-template-columns:repeat(4, 1fr);}
+    .proj-card{grid-column:span 2;}
+    .proj-card.big{grid-column:span 4;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    nav ul{display:none;}
+    section{padding:64px 0;}
+    .hero{padding:120px 0 70px;}
+    .projects-grid{grid-template-columns:1fr;}
+    .proj-card,
+    .proj-card.big{grid-column:span 1;}
+    .modal{padding:26px 20px;box-shadow:8px 8px 0 var(--yellow);}
+    .modal h3{font-size:1.2rem;}
+    .footer-top{grid-template-columns:1fr;}
+    .footer-bottom{flex-direction:column;text-align:center;}
+    .fact{grid-template-columns:1fr;gap:4px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="container">
+    <a href="#" class="logo">Рябов <em>/</em> Артём</a>
+    <ul>
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#projects">Работы</a></li>
+      <li><a href="#about">Обо мне</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-text">
+      <span class="kicker">Верстаю сайты · HTML / CSS / JS</span>
+      <h1>Делаю <mark>простые сайты</mark> без сюрпризов</h1>
+      <p>Меня зовут Артём. Год учусь верстать. Сделал три учебных проекта — все в портфолио ниже. Работаю медленнее студии, зато не пропадаю и не сдаю сырое.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Написать мне</a>
+        <a href="#projects" class="btn btn-outline">Посмотреть работы</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <pre><span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"card"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>Лендинг за 5 дней<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Адаптив, форма, без лишнего<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/section&gt;</span></pre>
+      <div class="hero-note">Свободен на будних днях · беру 1 проект за раз</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DARK / ПОДХОД ================= -->
+<section class="dark">
+  <div class="container">
+    <div class="dark-grid">
+      <div class="reveal">
+        <span class="kicker">Подход</span>
+        <h2>Сначала задача. Потом — как это выглядит.</h2>
+        <p>Красивая картинка без структуры не работает. Поэтому я сначала разбираюсь, что сайт должен делать, и только потом открываю редактор.</p>
+        <ul>
+          <li>Структура и навигация — до дизайна</li>
+          <li>Адаптив проверяю на своём телефоне</li>
+          <li>Пишу код так, чтобы другой человек понял</li>
+          <li>Сроки называю с запасом, а не «как получится»</li>
+        </ul>
+      </div>
+      <div class="dark-quote reveal">
+        <p>«Сайт — это не картинка.<br><em>Это инструмент.</em><br>Он должен работать.»</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY ME ================= -->
+<section>
+  <div class="container">
+    <div class="why-grid">
+      <div class="reveal">
+        <div class="why-num">01</div>
+        <div class="why-num-label">Чем я отличаюсь</div>
+      </div>
+      <div class="reveal">
+        <ul class="why-list">
+          <li>
+            <h4>Беру один проект за раз</h4>
+            <p>Не веду параллельные заказы. Пока ваш сайт не сдан — я не беру следующий. Поэтому сроки редко сдвигаются.</p>
+          </li>
+          <li>
+            <h4>Говорю «нет», если не умею</h4>
+            <p>Если задача требует бэкенда, сложной интеграции или того, чего я ещё не делал, — скажу сразу. Не буду неделю гуглить за ваши деньги.</p>
+          </li>
+          <li>
+            <h4>Присылаю прогресс раз в день</h4>
+            <p>Скриншот или ссылку на то, что сделал за день. Молча не пропадаю, «почти готово» не говорю неделями.</p>
+          </li>
+          <li>
+            <h4>Отдаю исходники и объясняю</h4>
+            <p>После сдачи — короткое сообщение, что где лежит и как это править без меня. Без «магии» и закрытых файлов.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="projects-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Портфолио</span>
+      <h2>Шесть учебных работ</h2>
+      <p>Это не коммерческие заказы. Всё сделано для практики — но по-настоящему, не для галочки. Кликните на карточку, чтобы увидеть детали.</p>
+    </div>
+    <div class="projects-grid">
+
+      <button class="proj-card big" data-project="manicure">
+        <div class="proj-thumb">
+          <span class="num">01</span>
+          <span class="kind">Учебный<br>проект</span>
+        </div>
+        <div class="proj-body">
+          <h3>Лендинг студии маникюра</h3>
+          <p>Одностраничник с формой записи. Первый проект, где я всерьёз возился с адаптивом.</p>
+          <div class="stack">HTML · CSS · JS</div>
+        </div>
+      </button>
+
+      <button class="proj-card big" data-project="cosmetics">
+        <div class="proj-thumb">
+          <span class="num">02</span>
+          <span class="kind">Учебный<br>проект</span>
+        </div>
+        <div class="proj-body">
+          <h3>Магазин косметики</h3>
+          <p>Каталог с корзиной на чистом JS. Здесь я впервые поработал с localStorage.</p>
+          <div class="stack">HTML · CSS · JS</div>
+        </div>
+      </button>
+
+      <button class="proj-card" data-project="itcompany">
+        <div class="proj-thumb">
+          <span class="num">03</span>
+          <span class="kind">Учебный</span>
+        </div>
+        <div class="proj-body">
+          <h3>Сайт IT-компании</h3>
+          <p>Многостраничник с блогом и повторяющимися блоками.</p>
+          <div class="stack">HTML · CSS · JS</div>
+        </div>
+      </button>
+
+      <button class="proj-card" data-project="portfolio">
+        <div class="proj-thumb">
+          <span class="num">04</span>
+          <span class="kind">Личный</span>
+        </div>
+        <div class="proj-body">
+          <h3>Сайт-портфолио</h3>
+          <p>То, что вы читаете сейчас. Сделал, чтобы найти первых клиентов.</p>
+          <div class="stack">HTML · CSS · JS</div>
+        </div>
+      </button>
+
+      <button class="proj-card" data-project="blog">
+        <div class="proj-thumb">
+          <span class="num">05</span>
+          <span class="kind">Учебный</span>
+        </div>
+        <div class="proj-body">
+          <h3>Личный блог</h3>
+          <p>Вёрстка статей. Учился работать с длинным текстом.</p>
+          <div class="stack">HTML · CSS</div>
+        </div>
+      </button>
+
+      <button class="proj-card" data-project="landing">
+        <div class="proj-thumb">
+          <span class="num">06</span>
+          <span class="kind">Учебный</span>
+        </div>
+        <div class="proj-body">
+          <h3>Лендинг IT-курса</h3>
+          <p>Продающая страница с формой. Практиковал структуру.</p>
+          <div class="stack">HTML · CSS · JS</div>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Услуги</span>
+      <h2>Что я умею делать сейчас</h2>
+      <p>Без «полного цикла» и «комплексных решений». Только то, что реально могу сделать хорошо.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="s-num">01 / Лендинги</span>
+        <h3>Одностраничники</h3>
+        <p>Сайт под одну услугу, товар или событие. Форма заявки, адаптив, аккуратная вёрстка. Обычно 2–5 дней.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="s-num">02 / Многостраничники</span>
+        <h3>Сайты с разделами</h3>
+        <p>О компании, услуги, блог, контакты. Понятная навигация и одинаковые блоки на всех страницах. От 1 недели.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="s-num">03 / Адаптив</span>
+        <h3>Починить мобильную версию</h3>
+        <p>Если сайт ломается на телефоне — правлю. Проверяю на iPhone SE, iPad и Android, а не «в инспекторе».</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="s-num">04 / Правки</span>
+        <h3>Мелкие доработки</h3>
+        <p>Поменять блок местами, добавить секцию, поправить отступы. Беру задачи от одного дня.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <div class="initials">АР</div>
+      </div>
+      <div class="about-text reveal">
+        <span class="kicker">Обо мне</span>
+        <h2>Артём, 22 года. Учусь верстать</h2>
+        <p>Веб-разработкой занялся год назад. До этого не имел дела с кодом — начал с HTML, потом CSS, сейчас разбираюсь с JavaScript. <strong>Каждый день — минимум час практики.</strong></p>
+        <p>Мне важно, чтобы сайт был не «красивым», а рабочим. Понятная структура, адаптив, ничего лишнего. Если посмотреть мой код — он скучный, но читаемый.</p>
+        <p>Если вы готовы дать шанс новичку — напишите. Отнесусь к задаче так же, как к своему портфолио: с вниманием к деталям и без пропусков связи.</p>
+        <dl class="facts">
+          <div class="fact">
+            <dt>HTML / CSS</dt>
+            <dd>Уверенно. Пишу адаптив без фреймворков.</dd>
+          </div>
+          <div class="fact">
+            <dt>JavaScript</dt>
+            <dd>Базовый уровень. Модалки, формы, корзины — делаю.</dd>
+          </div>
+          <div class="fact">
+            <dt>Сейчас учу</dt>
+            <dd>Git и работу с API.</dd>
+          </div>
+          <div class="fact">
+            <dt>Свободен</dt>
+            <dd>По будним дням. Беру один проект за раз.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <span class="kicker">Контакты</span>
+        <h2>Напишите — отвечу за день</h2>
+        <p>Опишите задачу в двух-трёх предложениях. Отвечу честно: берусь или нет, сколько займёт, сколько будет стоить. Если не берусь — подскажу, к кому пойти.</p>
+        <div class="channels">
+          <a href="https://t.me/tqqmqq" class="channel">
+            <span class="label">Telegram</span>
+            <span class="value">@tqqmqq</span>
+          </a>
+          <a href="mailto:ar_requests@mail.ru" class="channel">
+            <span class="label">Email</span>
+            <span class="value">ar_requests@mail.ru</span>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" novalidate>
+        <h3>Оставить заявку</h3>
+        <p class="hint">Опишите задачу — свяжусь, как прочитаю.</p>
+
+        <div class="field">
+          <label for="cf-name">Как вас зовут</label>
+          <input id="cf-name" name="name" type="text" placeholder="Имя" required>
+        </div>
+
+        <div class="field">
+          <label for="cf-contact">Куда ответить</label>
+          <input id="cf-contact" name="contact" type="text" placeholder="Email или @telegram" required>
+        </div>
+
+        <div class="field">
+          <label for="cf-task">Задача</label>
+          <textarea id="cf-task" name="task" placeholder="Например: нужен лендинг для студии маникюра, 5 блоков, форма записи" required></textarea>
+        </div>
+
+        <!-- honeypot против спам-ботов, скрыт от людей -->
+        <input type="text" name="website" id="cf-website" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+
+        <button type="submit" class="submit" id="cf-submit">Отправить заявку</button>
+
+        <p class="note" id="cf-status">Отправка идёт в Telegram. Быстрее всего — написать напрямую: @tqqmqq</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <h4>Рябов Артём</h4>
+        <p>Начинающий веб-разработчик из Беларуси. Верстаю сайты на HTML, CSS и JavaScript. Открыт для первых небольших проектов.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#projects">Работы</a></li>
+          <li><a href="#about">Обо мне</a></li>
+          <li><a href="#contact">Контакты</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Связь</h4>
+        <ul>
+          <li><a href="https://t.me/tqqmqq">Telegram — @tqqmqq</a></li>
+          <li><a href="mailto:ar_requests@mail.ru">ar_requests@mail.ru</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Рябов Артём. Сделано вручную.</span>
+      <div class="socials">
+        <a href="https://t.me/tqqmqq">Telegram</a>
+        <a href="#">GitHub</a>
+        <a href="#">VK</a>
+        <a href="mailto:ar_requests@mail.ru">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+    <div class="modal-thumb">
+      <span class="num" id="modalNum">01</span>
+      <span class="kind" id="modalKind">Учебный<br>проект</span>
+    </div>
+    <h3 id="modalTitle">Название</h3>
+    <p id="modalDesc">Описание</p>
+    <div class="modal-note" id="modalNote"></div>
+    <div class="modal-section">
+      <h4>Что делал</h4>
+      <ul id="modalTasks"></ul>
+    </div>
+    <div class="modal-section">
+      <h4>Стек</h4>
+      <p id="modalStack"></p>
+    </div>
+    <div class="modal-actions">
+      <a href="#contact" class="btn-primary" id="modalCta">Хочу похожий сайт</a>
+      <button class="btn-ghost" id="modalCloseBtn" type="button">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ============================================================
+     НАСТРОЙКА ОТПРАВКИ ЗАЯВОК В TELEGRAM
+     ------------------------------------------------------------
+     1. Создайте бота у @BotFather в Telegram — он выдаст токен.
+     2. Узнайте свой chat_id у @userinfobot.
+     3. Обязательно отправьте своему боту команду /start.
+     4. Замените значения ниже на свои.
+     ============================================================ */
+  const TELEGRAM_BOT_TOKEN = '8880652980:AAFTRySgupAHLG3lIWgqcOHXDE6X-SOudAo';
+  const TELEGRAM_CHAT_ID   = '5331812796';
+  /* ============================================================ */
+
+
+  /* ============ ДАННЫЕ ПРОЕКТОВ ============ */
+  const projects = {
+    manicure: {
+      num:'01', kind:'Учебный<br>проект',
+      title:'Лендинг студии маникюра',
+      desc:'Одностраничник с формой записи. Первый проект, где я всерьёз занялся адаптивом — до этого просто подгонял числа на глаз.',
+      note:'Учебная работа, не коммерческий заказ. Делал для практики.',
+      tasks:[
+        'Сверстал одностраничник с пятью смысловыми блоками',
+        'Сделал форму записи с проверкой полей на JS',
+        'Прогнал адаптив на iPhone SE, iPhone 14 и iPad',
+        'Оставил структуру под будущий бэкенд — форму легко подключить'
+      ],
+      stack:'HTML, CSS, JavaScript'
+    },
+    cosmetics: {
+      num:'02', kind:'Учебный<br>проект',
+      title:'Магазин косметики',
+      desc:'Каталог товаров с корзиной. Здесь я впервые поработал с массивами объектов и localStorage — до этого JS был для модалок и мелочей.',
+      note:'Учебная работа. Данные товаров захардкожены, оплаты нет.',
+      tasks:[
+        'Сверстал каталог с карточками разной высоты',
+        'Написал корзину на чистом JS без библиотек',
+        'Сделал фильтр по категориям и сортировку по цене',
+        'Разобрался, как хранить корзину в localStorage'
+      ],
+      stack:'HTML, CSS, JavaScript'
+    },
+    itcompany: {
+      num:'03', kind:'Учебный<br>проект',
+      title:'Сайт IT-компании',
+      desc:'Многостраничник с блогом. Основная задача была не «сделать красиво», а не запутаться в структуре — пять страниц с повторяющимися блоками.',
+      note:'Учебная работа. Контент выдуман, ссылки ведут в никуда.',
+      tasks:[
+        'Спроектировал структуру из пяти страниц',
+        'Вынес шапку и подвал в отдельные куски кода',
+        'Сделал раздел с блогом и страницы отдельных статей',
+        'Проверил навигацию на телефоне — меню на JS'
+      ],
+      stack:'HTML, CSS, JavaScript'
+    },
+    portfolio: {
+      num:'04', kind:'Личный<br>проект',
+      title:'Сайт-портфолио',
+      desc:'То, что вы сейчас читаете. Делал для себя, чтобы показать работы и найти первых клиентов. Переписывал три раза.',
+      note:'Личный проект. Первая версия была на шаблоне, эту собирал с нуля.',
+      tasks:[
+        'Продумал структуру и порядок секций',
+        'Сверстал все секции с нуля, без шаблонов',
+        'Написал модальные окна на чистом JS',
+        'Сделал адаптив под телефоны и планшеты'
+      ],
+      stack:'HTML, CSS, JavaScript'
+    },
+    blog: {
+      num:'05', kind:'Учебный<br>проект',
+      title:'Личный блог',
+      desc:'Вёрстка статей с аккуратной типографикой. Учился работать с длинным текстом — чтобы читалось, а не «просто помещалось».',
+      note:'Учебная работа. Это чистая вёрстка, без CMS.',
+      tasks:[
+        'Сверстал шаблон страницы статьи',
+        'Настроил типографику: размеры, межстрочные, отступы',
+        'Проверил чтение с телефона — шрифт не мелкий',
+        'Добавил блок похожих статей в конце'
+      ],
+      stack:'HTML, CSS'
+    },
+    landing: {
+      num:'06', kind:'Учебный<br>проект',
+      title:'Лендинг IT-курса',
+      desc:'Продающая страница с формой записи. Практиковал структуру лендинга: зацеп, оффер, возражения, форма.',
+      note:'Учебная работа. Курс выдуман, отзывы — тоже.',
+      tasks:[
+        'Сверстал структуру по классической схеме лендинга',
+        'Добавил появление блоков при скролле',
+        'Сделал форму с проверкой полей',
+        'Попрактиковался в работе с крупной типографикой'
+      ],
+      stack:'HTML, CSS, JavaScript'
+    }
+  };
+
+  /* ============ МОДАЛЬНОЕ ОКНО ============ */
+  const modal = document.getElementById('modal');
+  const modalNum = document.getElementById('modalNum');
+  const modalKind = document.getElementById('modalKind');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalNote = document.getElementById('modalNote');
+  const modalTasks = document.getElementById('modalTasks');
+  const modalStack = document.getElementById('modalStack');
+  let lastFocused = null;
+
+  function openModal(key){
+    const p = projects[key];
+    if(!p) return;
+    lastFocused = document.activeElement;
+    modalNum.textContent = p.num;
+    modalKind.innerHTML = p.kind;
+    modalTitle.textContent = p.title;
+    modalDesc.textContent = p.desc;
+    modalNote.textContent = p.note;
+    modalTasks.innerHTML = p.tasks.map(t => `<li>${t}</li>`).join('');
+    modalStack.textContent = p.stack;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modalClose').focus();
+  }
+  function closeModal(){
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if(lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll('.proj-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.project));
+  });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+  document.getElementById('modalCta').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+
+  /* ============ REVEAL ON SCROLL ============ */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ============ ГОД В ФУТЕРЕ ============ */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ============ ОТПРАВКА ФОРМЫ В TELEGRAM ============ */
+  const form   = document.getElementById('contactForm');
+  const submit = document.getElementById('cf-submit');
+  const status = document.getElementById('cf-status');
+
+  function setStatus(text, type){
+    status.textContent = text;
+    status.classList.remove('is-success','is-error');
+    if(type === 'success') status.classList.add('is-success');
+    if(type === 'error')   status.classList.add('is-error');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name    = form.name.value.trim();
+    const contact = form.contact.value.trim();
+    const task    = form.task.value.trim();
+    const honey   = form.website.value.trim();
+
+    // Антиспам: если honeypot заполнен — тихо выходим
+    if (honey) return;
+
+    if (!name || !contact || !task){
+      setStatus('Заполните все поля.', 'error');
+      return;
+    }
+
+    if (TELEGRAM_BOT_TOKEN.includes('ЗАМЕНИТЕ') || TELEGRAM_CHAT_ID.includes('ЗАМЕНИТЕ')){
+      setStatus('Форма не настроена: укажите токен бота и chat_id в коде.', 'error');
+      return;
+    }
+
+    submit.disabled = true;
+    const originalText = submit.textContent;
+    submit.textContent = 'Отправляю…';
+    setStatus('Отправляю заявку…');
+
+    const text =
+      '📩 Новая заявка с сайта\n\n' +
+      '👤 Имя: ' + name + '\n' +
+      '📬 Контакт: ' + contact + '\n' +
+      '📝 Задача:\n' + task;
+
+    try {
+      const res = await fetch(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: text,
+            disable_web_page_preview: true
+          })
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.ok){
+        setStatus('Готово! Заявка отправлена — отвечу в течение дня.', 'success');
+        form.reset();
+      } else {
+        console.error('Telegram error:', data);
+        setStatus('Не удалось отправить. Напишите в Telegram: @tqqmqq', 'error');
+      }
+    } catch (err){
+      console.error(err);
+      setStatus('Сеть недоступна. Напишите в Telegram: @tqqmqq', 'error');
+    } finally {
+      submit.disabled = false;
+      submit.textContent = originalText;
+    }
+  });
+</script>
+
+</body>
+</html>
